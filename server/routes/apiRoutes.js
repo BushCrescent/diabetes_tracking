@@ -7,12 +7,13 @@ router.get("/user/:id", (req, res) => {
   connection.query(
     `SELECT *
         FROM sugar_levels
-        JOIN user ON suger_levels.user_id = user.id
+        JOIN user ON sugar_levels.user_id = user.id
         WHERE user.id = ${id};
     `,
     (err, data) => {
       if (err) throw err;
       console.log(data);
+      res.json(data);
     }
   );
 });

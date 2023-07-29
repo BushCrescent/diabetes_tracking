@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS suger_tracker_db;
+DROP DATABASE IF EXISTS sugar_tracker_db;
 
-CREATE DATABASE suger_tracker_db;
+CREATE DATABASE sugar_tracker_db;
 
-USE suger_tracker_db;
+USE sugar_tracker_db;
 
 CREATE TABLE user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -11,7 +11,7 @@ CREATE TABLE user (
 	gender VARCHAR(255)
 );
 
-CREATE TABLE suger_levels (
+CREATE TABLE sugar_levels (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	date DATE,
 	level INT NOT NULL,
@@ -24,7 +24,7 @@ VALUES
 	("Jane", 50, "FEMALE"),
 	("Joe", 40, "MALE");
 
-INSERT INTO suger_levels (date, level, user_id)
+INSERT INTO sugar_levels (date, level, user_id)
 VALUES
 	("2023-07-24", 150, 1),
 	("2023-07-25", 160, 1),
