@@ -1,7 +1,7 @@
 const express = require("express");
 const connection = require("./config/configuration");
-// const htmlRoutes = require("./routes/htmlRoutes");
-// const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
+const apiRoutes = require("./routes/apiRoutes");
 
 //create server and port
 const app = express();
@@ -13,8 +13,9 @@ app.use(express.json());
 
 //public asset access
 app.use(express.static("public"));
-// app.use(apiRoutes);
-// app.use(htmlRoutes);
+
+app.use(apiRoutes);
+app.use(htmlRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
