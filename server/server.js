@@ -1,5 +1,4 @@
 const express = require("express");
-const connection = require("./config/configuration");
 const htmlRoutes = require("./routes/htmlRoutes");
 const apiRoutes = require("./routes/apiRoutes");
 

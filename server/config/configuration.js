@@ -4,7 +4,7 @@ require("dotenv").config({
   path: path.resolve(__dirname, "../.env"),
 });
 
-let connection;
+let connection = mysql.createConnection();
 
 if (process.env.JAWSDB_URL) {
   connection = mysql.createConnection(process.env.JAWSDB_URL);
