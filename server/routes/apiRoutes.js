@@ -18,4 +18,26 @@ router.get("/user/:id", (req, res) => {
   );
 });
 
+router.post("/user/sugar-level", (req, res) => {
+  const { id, level, date } = req.body;
+
+  console.log(req.body);
+
+  connection.query(
+    `
+      INSERT INTO sugar_levels (date, level, user_id)
+          VALUES
+          ("${new Date(date)
+            .toISOString()
+            .slice(0, 19)
+            .replace("T", " ")}", ${level}, ${id});
+    `,
+    (err, data) => {
+      if (err) throw err;
+      console.log(data);
+      res.json(data);
+    }
+  );
+});
+
 module.exports = router;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,90 +21,72 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
-    },
-  },
-};
-
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: [123, 23, 23, 23, 123, 123],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
-
-export const Table = () => {
-  //const [data, setData] = useState(null);
-
+export const Table = ({ data, setData }) => {
   useEffect(() => {
-    console.log("hello");
     fetch("/user/1")
       .then((response) => response.json())
-      .then((json) => {
-        array.sort((a, b) => a.getTime() - b.getTime());
+      .then((data) => {
+        const sortedSugarLevels = data.sort((a, b) =>
+          new Date(a.date).getTime() > new Date(b.date).getTime() ? 1 : -1
+        );
+
+        let labels = [];
+        let sugarLevels = [];
+
+        sortedSugarLevels.forEach((sugarLevel) => {
+          labels.push(new Date(sugarLevel.date).toLocaleDateString());
+          sugarLevels.push(sugarLevel.level);
+        });
+
+        const chartOptions = {
+          labels,
+          datasets: [
+            {
+              label: "Sugar level",
+              data: sugarLevels,
+              borderColor: "rgb(255, 99, 132)",
+              backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+          ],
+        };
+
+        console.log(setData);
+
+        setData(chartOptions);
       });
   }, []);
-  return data ? <Line options={options} data={data} /> : null;
+  const options = {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Chart.js Line Chart",
+      },
+    },
+    interaction: {
+      mode: "index",
+      intersect: false,
+    },
+    scales: {
+      x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Month",
+        },
+      },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "Value",
+        },
+      },
+    },
+  };
+  return data ? (
+    <div className="graph">
+      <Line options={options} data={data} />{" "}
+    </div>
+  ) : null;
 };
-[
-  {
-    id: 1,
-    date: "2023-07-24T07:00:00.000Z",
-    level: 150,
-    user_id: 1,
-    name: "Jane",
-    age: 50,
-    gender: "FEMALE",
-  },
-  {
-    id: 1,
-    date: "2023-07-25T07:00:00.000Z",
-    level: 160,
-    user_id: 1,
-    name: "Jane",
-    age: 50,
-    gender: "FEMALE",
-  },
-  {
-    id: 1,
-    date: "2023-07-26T07:00:00.000Z",
-    level: 170,
-    user_id: 1,
-    name: "Jane",
-    age: 50,
-    gender: "FEMALE",
-  },
-  {
-    id: 1,
-    date: "2023-07-27T07:00:00.000Z",
-    level: 180,
-    user_id: 1,
-    name: "Jane",
-    age: 50,
-    gender: "FEMALE",
-  },
-  {
-    id: 1,
-    date: "2023-07-28T07:00:00.000Z",
-    level: 140,
-    user_id: 1,
-    name: "Jane",
-    age: 50,
-    gender: "FEMALE",
-  },
-];
